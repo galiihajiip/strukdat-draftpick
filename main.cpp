@@ -1096,7 +1096,7 @@ public:
             if (temp) pickedRed.remove(temp->data.name);
         }
         
-        // Reinitialize
+        // Reinitialize available heroes
         while (!availableHeroes.isEmpty()) {
             SLLNode* temp = availableHeroes.getHead();
             if (temp) availableHeroes.remove(temp->data.name);
@@ -1105,56 +1105,115 @@ public:
             availableHeroes.insert(heroPool[i]);
         }
         
-        // Reinitialize draft order
-        string t, p;
-        while (!draftOrder.isEmpty()) draftOrder.dequeue(t, p);
-        initializeDraftOrder();
-        
         cout << "\n+--------------------------------------------------------------+" << endl;
         cout << "|              DRAFT PICK STARTED!                             |" << endl;
         cout << "|              Ban: 3 per team | Pick: 5 per team              |" << endl;
         cout << "+--------------------------------------------------------------+" << endl;
         
-        string team, phase;
-        int turnCount = 0;
+        // ========== BAN PHASE ==========
+        cout << "\n==================== BAN PHASE ====================" << endl;
+        string banOrder[] = {"BLUE", "RED", "BLUE", "RED", "BLUE", "RED"};
         
-        while (!draftOrder.isEmpty()) {
-            draftOrder.dequeue(team, phase);
-            turnCount++;
+        for (int i = 0; i < 6; i++) {
+            string team = banOrder[i];
+            cout << "\n[" << team << "] BAN " << (i/2 + 1) << " of 3" << endl;
+            cout << "----------------------------------------" << endl;
             
-            cout << "\n========================================" << endl;
-            cout << "[" << team << "] " << phase << " Phase - Turn " << turnCount << endl;
-            cout << "========================================" << endl;
+            // Display available heroes with numbers
+            SLLNode* temp = availableHeroes.getHead();
+            int idx = 1;
+            while (temp) {
+                cout << setw(3) << idx << ". " << setw(15) << left << temp->data.name 
+                     << " | " << setw(10) << temp->data.role << endl;
+                temp = temp->next;
+                idx++;
+            }
             
-            displayAvailableHeroes();
+            cout << "\nPilih nomor hero untuk di-BAN: ";
+            int choice;
+            cin >> choice;
             
-            cout << "\nMasukkan nama hero: ";
-            string heroName;
-            cin.ignore();
-            getline(cin, heroName);
+            // Find hero by index
+            temp = availableHeroes.getHead();
+            idx = 1;
+            Hero* selectedHero = nullptr;
+            string selectedName = "";
+            while (temp) {
+                if (idx == choice) {
+                    selectedHero = &temp->data;
+                    selectedName = temp->data.name;
+                    break;
+                }
+                temp = temp->next;
+                idx++;
+            }
             
-            Hero* hero = availableHeroes.search(heroName);
-            if (!hero) {
-                cout << "Hero tidak tersedia! Silakan pilih ulang." << endl;
-                draftOrder.enqueue(team, phase);
+            if (!selectedHero) {
+                cout << "Nomor tidak valid! Ulangi." << endl;
+                i--;
                 continue;
             }
             
-            if (phase == "BAN") {
-                bannedHeroes.insertBack(*hero);
-                history.push("BAN-" + team, *hero);
-                cout << team << " mem-BAN " << hero->name << "!" << endl;
-            } else {
-                if (team == "BLUE") {
-                    pickedBlue.insertBack(*hero);
-                } else {
-                    pickedRed.insertBack(*hero);
-                }
-                history.push("PICK-" + team, *hero);
-                cout << team << " mem-PICK " << hero->name << "!" << endl;
+            bannedHeroes.insertBack(*selectedHero);
+            history.push("BAN-" + team, *selectedHero);
+            availableHeroes.remove(selectedName);
+            cout << ">>> " << team << " mem-BAN " << selectedName << "!" << endl;
+        }
+        
+        // ========== PICK PHASE ==========
+        cout << "\n==================== PICK PHASE ====================" << endl;
+        string pickOrder[] = {"BLUE", "RED", "RED", "BLUE", "BLUE", "RED", "RED", "BLUE", "BLUE", "RED"};
+        
+        for (int i = 0; i < 10; i++) {
+            string team = pickOrder[i];
+            int pickNum = (team == "BLUE") ? pickedBlue.getSize() + 1 : pickedRed.getSize() + 1;
+            cout << "\n[" << team << "] PICK " << pickNum << " of 5" << endl;
+            cout << "----------------------------------------" << endl;
+            
+            // Display available heroes with numbers
+            SLLNode* temp = availableHeroes.getHead();
+            int idx = 1;
+            while (temp) {
+                cout << setw(3) << idx << ". " << setw(15) << left << temp->data.name 
+                     << " | " << setw(10) << temp->data.role 
+                     << " | Power: " << temp->data.power << endl;
+                temp = temp->next;
+                idx++;
             }
             
-            availableHeroes.remove(heroName);
+            cout << "\nPilih nomor hero untuk di-PICK: ";
+            int choice;
+            cin >> choice;
+            
+            // Find hero by index
+            temp = availableHeroes.getHead();
+            idx = 1;
+            Hero* selectedHero = nullptr;
+            string selectedName = "";
+            while (temp) {
+                if (idx == choice) {
+                    selectedHero = &temp->data;
+                    selectedName = temp->data.name;
+                    break;
+                }
+                temp = temp->next;
+                idx++;
+            }
+            
+            if (!selectedHero) {
+                cout << "Nomor tidak valid! Ulangi." << endl;
+                i--;
+                continue;
+            }
+            
+            if (team == "BLUE") {
+                pickedBlue.insertBack(*selectedHero);
+            } else {
+                pickedRed.insertBack(*selectedHero);
+            }
+            history.push("PICK-" + team, *selectedHero);
+            availableHeroes.remove(selectedName);
+            cout << ">>> " << team << " mem-PICK " << selectedName << "!" << endl;
         }
         
         // Display final result
