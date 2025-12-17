@@ -895,21 +895,21 @@ public:
     
     void displayMainMenu() {
         cout << "\n";
-        cout << "╔══════════════════════════════════════════════════════════════╗" << endl;
-        cout << "║       MOBILE LEGENDS - DRAFT PICK SYSTEM                     ║" << endl;
-        cout << "║       EAS Struktur Data                                      ║" << endl;
-        cout << "╠══════════════════════════════════════════════════════════════╣" << endl;
-        cout << "║  1. Start Draft Pick                                         ║" << endl;
-        cout << "║  2. Manage Hero Database                                     ║" << endl;
-        cout << "║  3. View All Heroes (BST - Sorted by Name)                   ║" << endl;
-        cout << "║  4. View All Heroes (AVL - Sorted by Power)                  ║" << endl;
-        cout << "║  5. Search Hero                                              ║" << endl;
-        cout << "║  6. Hero Statistics                                          ║" << endl;
-        cout << "║  7. Export Data to File                                      ║" << endl;
-        cout << "║  8. View History (Stack)                                     ║" << endl;
-        cout << "║  9. Hero Recommendations (Priority Queue)                    ║" << endl;
-        cout << "║  0. Exit                                                     ║" << endl;
-        cout << "╚══════════════════════════════════════════════════════════════╝" << endl;
+        cout << "+--------------------------------------------------------------+" << endl;
+        cout << "|       MOBILE LEGENDS - DRAFT PICK SYSTEM                     |" << endl;
+        cout << "|       EAS Struktur Data                                      |" << endl;
+        cout << "+--------------------------------------------------------------+" << endl;
+        cout << "|  1. Start Draft Pick                                         |" << endl;
+        cout << "|  2. Manage Hero Database                                     |" << endl;
+        cout << "|  3. View All Heroes (BST - Sorted by Name)                   |" << endl;
+        cout << "|  4. View All Heroes (AVL - Sorted by Power)                  |" << endl;
+        cout << "|  5. Search Hero                                              |" << endl;
+        cout << "|  6. Hero Statistics                                          |" << endl;
+        cout << "|  7. Export Data to File                                      |" << endl;
+        cout << "|  8. View History (Stack)                                     |" << endl;
+        cout << "|  9. Hero Recommendations (Priority Queue)                    |" << endl;
+        cout << "|  0. Exit                                                     |" << endl;
+        cout << "+--------------------------------------------------------------+" << endl;
         cout << "Pilih menu: ";
     }
     
@@ -1110,10 +1110,10 @@ public:
         while (!draftOrder.isEmpty()) draftOrder.dequeue(t, p);
         initializeDraftOrder();
         
-        cout << "\n╔══════════════════════════════════════════════════════════════╗" << endl;
-        cout << "║              DRAFT PICK STARTED!                             ║" << endl;
-        cout << "║              Ban: 3 per team | Pick: 5 per team              ║" << endl;
-        cout << "╚══════════════════════════════════════════════════════════════╝" << endl;
+        cout << "\n+--------------------------------------------------------------+" << endl;
+        cout << "|              DRAFT PICK STARTED!                             |" << endl;
+        cout << "|              Ban: 3 per team | Pick: 5 per team              |" << endl;
+        cout << "+--------------------------------------------------------------+" << endl;
         
         string team, phase;
         int turnCount = 0;
@@ -1162,9 +1162,9 @@ public:
     }
     
     void displayDraftResult() {
-        cout << "\n╔══════════════════════════════════════════════════════════════╗" << endl;
-        cout << "║                    DRAFT PICK RESULT                         ║" << endl;
-        cout << "╚══════════════════════════════════════════════════════════════╝" << endl;
+        cout << "\n+--------------------------------------------------------------+" << endl;
+        cout << "|                    DRAFT PICK RESULT                         |" << endl;
+        cout << "+--------------------------------------------------------------+" << endl;
         
         cout << "\n=== BANNED HEROES (" << bannedHeroes.getSize() << ") ===" << endl;
         bannedHeroes.displayForward();
@@ -1208,13 +1208,13 @@ public:
 
 // ==================== MAIN FUNCTION ====================
 int main() {
-    cout << "╔══════════════════════════════════════════════════════════════╗" << endl;
-    cout << "║     EAS STRUKTUR DATA - MOBILE LEGENDS DRAFT PICK           ║" << endl;
-    cout << "║                                                              ║" << endl;
-    cout << "║  Implementasi:                                               ║" << endl;
-    cout << "║  - ADT, Rekursif, Single & Double Linked List               ║" << endl;
-    cout << "║  - Stack, Queue, Sorting, BST, AVL Tree, Priority Queue     ║" << endl;
-    cout << "╚══════════════════════════════════════════════════════════════╝" << endl;
+    cout << "+--------------------------------------------------------------+" << endl;
+    cout << "|     EAS STRUKTUR DATA - MOBILE LEGENDS DRAFT PICK           |" << endl;
+    cout << "|                                                              |" << endl;
+    cout << "|  Implementasi:                                               |" << endl;
+    cout << "|  - ADT, Rekursif, Single & Double Linked List               |" << endl;
+    cout << "|  - Stack, Queue, Sorting, BST, AVL Tree, Priority Queue     |" << endl;
+    cout << "+--------------------------------------------------------------+" << endl;
     
     DraftPickSystem system;
     system.run();
